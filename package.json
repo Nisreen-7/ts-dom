@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lorem-ipsum": "^2.0.8",
     "parcel": "^2.8.3"
   }
 }
