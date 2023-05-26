@@ -173,3 +173,40 @@ bbtt.addEventListener('click', () => {
 
 
 })
+
+
+
+// Formulaire ajout Student
+
+let fisrtNameN = document.querySelector<HTMLInputElement>('#lb1');
+let nameN = document.querySelector<HTMLInputElement>('#lb2');
+let promoN = document.querySelector<HTMLInputElement>('#lb3');
+let pictureN = document.querySelector<HTMLInputElement>('#lb4');
+
+let form = document.querySelector<HTMLFormElement>('form');
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (fisrtNameN && nameN && promoN && pictureN) {
+        // stagiéres.push({
+        //     firstName: fisrtNameN.value,
+        //     name: nameN.value,
+        //     promo: Number(promoN.value),
+        //     picture: pictureN.value
+
+        // })
+
+        // creer nouvel student as objet
+        let newStudent: Student = {
+            name: nameN.value,
+            firstName: fisrtNameN.value,
+            promo: Number(promoN.value),
+            picture: pictureN.value
+        }
+        stagiéres.push(newStudent);
+
+    }
+    displayStudent(stagiéres);
+    console.log(stagiéres);
+
+})
