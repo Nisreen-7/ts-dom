@@ -145,11 +145,22 @@ function displayStudent(students: Student[]) {
 
         target.appendChild(col);
 
+        //Si le student actuel de la boucle est le même que celui dans la variable selected, alors on lui rajoute une classe bootstrap pour le distinguer visuellement
 
         if (selected === item) {
             div.classList.add('bg-primary');
         }
 
+
+
+
+
+
+
+        /**
+         * Au click sur la card d'un student, on fait en sorte de mettre la valeur actuelle de la boucle en selected,
+        * ou de mettre selected à null si on click sur le student qui est déjà sélectionné, et on relance la fonction d'affichage
+        */
         div.addEventListener('click', (event) => {
             if (selected === item) {
                 selected = null;
@@ -158,12 +169,32 @@ function displayStudent(students: Student[]) {
                 selected = item;
 
             }
+            /**
+            * Ici, on fait en sorte d'assigner les valeurs du student sélectionné aux champs de notre formulaire, si il y
+            *  a effectivement un student sélectionné, sinon on vide les champs du formulaire avec un reset()
+            */
+            if (selected) {
+                fisrtNameN.value = selected.firstName;
+                nameN.value = selected.name;
+                promoN.value = String(selected.promo);
+                pictureN.value = selected.picture;
+            } else {
+                form.reset();
+            }
+
+
+
             displayStudent(stagiéres);
 
         })
 
 
     }
+
+
+
+
+
 }
 
 const bbtt = document.querySelector<HTMLButtonElement>('#change');
@@ -183,9 +214,26 @@ let nameN = document.querySelector<HTMLInputElement>('#lb2');
 let promoN = document.querySelector<HTMLInputElement>('#lb3');
 let pictureN = document.querySelector<HTMLInputElement>('#lb4');
 
+
+
+// avec object de form on peut prend toutes les data comme ca
+// const data = new FormData(form);
+// let newStudent:Student = {
+//     name: data.get('name')  as string,
+//     firstName: data.get('firstname')  as string,
+//     promo: Number(data.get('promo')),
+//     picture: data.get('picture')  as string
+// }
+
 let form = document.querySelector<HTMLFormElement>('form');
+
+
+
+
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+
 
     if (fisrtNameN && nameN && promoN && pictureN) {
         // stagiéres.push({
@@ -203,10 +251,18 @@ form.addEventListener('submit', (event) => {
             promo: Number(promoN.value),
             picture: pictureN.value
         }
-        stagiéres.push(newStudent);
+        // stagiéres.push(newStudent);
+
+        if (!selected) {
+            stagiéres.push(newStudent);
+        } else {
+            Object.assign(selected, newStudent);
+        }
+
 
     }
     displayStudent(stagiéres);
     console.log(stagiéres);
 
 })
+
